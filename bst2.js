@@ -56,6 +56,22 @@ class Tree {
     } 
   }
 
+  levelOrder(func = 'none') {
+    let queue = [this.root]
+    let arr = []
+    while (queue.length > 0) {
+      if (queue[0] != null) {
+        let firstOne = queue.shift()
+        func === 'none'
+        ? arr.push(firstOne.node)
+        : func(firstOne)
+        queue.push(firstOne.left, firstOne.right)
+      } else {
+        queue.shift()
+      }
+    }
+    return arr
+  }
   
 }
 
@@ -76,4 +92,5 @@ nodo.insert(17)
 console.log(nodo.find(6))
 /* console.log(nodo) */
 console.log('hola guerre')
+console.log(nodo.levelOrder())
 prettyPrint(nodo.root) 
