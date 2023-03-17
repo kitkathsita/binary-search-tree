@@ -72,6 +72,27 @@ class Tree {
     }
     return arr
   }
+
+  preOrder(func = 'none') {
+    let stack = [this.root]
+    let arr = []
+    while (stack.length > 0) {
+      if (stack[stack.length-1] != null) {
+        let firstOut = stack.pop()
+        func === 'none'
+        ? arr.push(firstOut.node)
+        : func(firstOut)
+        stack.push(firstOut.right, firstOut.left)
+      } else {
+        stack.pop()
+      }
+    }
+    return arr
+  }
+
+  inOrder(func = 'none') {
+    
+  }
   
 }
 
@@ -92,5 +113,5 @@ nodo.insert(17)
 console.log(nodo.find(6))
 /* console.log(nodo) */
 console.log('hola guerre')
-console.log(nodo.levelOrder())
+console.log(nodo.preOrder())
 prettyPrint(nodo.root) 
