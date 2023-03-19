@@ -12,5 +12,6 @@ It has some methods like:
   - Depth:  which calculates the depth of a given node
   - isBalanced: which tells if the tree is balanced
   - rebalance: rebalance a tree
+
 :3
-if you're reading this: have an amazing day, just list u!
+if you're reading this: have an amazing day, just like u!
