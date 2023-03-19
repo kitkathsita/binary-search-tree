@@ -73,7 +73,7 @@ class Tree {
     return arr
   }
 
-  preOrder(func = 'none') {
+  /* preOrder2(func = 'none') {
     let stack = [this.root]
     let arr = []
     while (stack.length > 0) {
@@ -87,11 +87,86 @@ class Tree {
         stack.pop()
       }
     }
+    return arr 
+  } */
+
+  preOrder(actNode = this.root, arr = [], func = 'none') {
+    if (actNode === null) return
+    func === 'none'
+    ? arr.push(actNode.node)
+    : func(actNode.node)
+    this.inOrder(actNode.left, arr)
+    this.inOrder(actNode.right, arr)
+
     return arr
   }
 
-  inOrder(func = 'none') {
+  inOrder(actNode = this.root, arr = [], func = 'none') {
+    if (actNode === null) return
+    this.inOrder(actNode.left, arr)
+    func === 'none'
+    ? arr.push(actNode.node)
+    : func(actNode.node)
+    this.inOrder(actNode.right, arr)
+
+    return arr
+  }
+
+  postOrder(actNode = this.root, arr = [], func = 'none') {
+    if (actNode === null) return
+    this.inOrder(actNode.left, arr)
+    this.inOrder(actNode.right, arr)
+    func === 'none'
+    ? arr.push(actNode.node)
+    : func(actNode.node)
+
+    return arr
+  }
+
+  height(actNode = this.root) {
+    if (actNode === null) return -1
+
+    let leftHeight = this.height(actNode.left)
+    let rightHeight = this.height(actNode.right)
+
+    return Math.max(leftHeight, rightHeight) + 1
+  }
+
+  depth(number, root = this.root, edge = 0) {
+    if (root === null) return
+    if (root.node === number) return edge
+
+    if (root.node > number) {
+      return this.depth(number, root.left, edge + 1)
+    } else {
+      return this.depth(number, root.right, edge + 1)
+    }
+  }
+
+  isBalanced(actNode = this.root, prove = 'is balanced') {
+    if (actNode === null) return
+    let rightSubTree = this.height(actNode.right)
+    let leftSubTree = this.height(actNode.left)
     
+    Math.abs(rightSubTree-leftSubTree) <= 1
+    ? prove = 'is balanced'
+    : prove = 'is not balanced'
+    
+    if (prove === 'is not balanced') {
+      console.log('aaaaa')
+      return prove
+    } else {
+      this.isBalanced(actNode.right, prove)
+      this.isBalanced(actNode.left, prove)
+      return prove 
+    } 
+    
+  }
+
+  rebalance() {
+    let arr = this.inOrder()
+    this.root = this.buildTree(arr)
+    return this.root
   }
   
 }
@@ -109,9 +184,11 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 let a = [11,5,4,8,0,15,6,7]
 let nodo = new Tree(a)
 nodo.insert(2)
-nodo.insert(17)
-console.log(nodo.find(6))
+nodo.insert(17) 
+/*console.log(nodo.find(6))
 /* console.log(nodo) */
 console.log('hola guerre')
-console.log(nodo.preOrder())
+/* console.log(nodo.preOrder2())*/
 prettyPrint(nodo.root) 
+/*console.log(nodo.depth(6))*/
+console.log(nodo.isBalanced())
