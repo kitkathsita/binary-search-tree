@@ -123,7 +123,16 @@ class Tree {
     return arr
   }
 
-  height(actNode = this.root) {
+  heightTree(actNode = this.root) {
+    if (actNode === null) return -1
+
+    let leftHeight = this.heightTree(actNode.left)
+    let rightHeight = this.heightTree(actNode.right)
+
+    return Math.max(leftHeight, rightHeight) + 1
+  }
+  
+  height(number, actNode = this.find(number)) {
     if (actNode === null) return -1
 
     let leftHeight = this.height(actNode.left)
@@ -143,24 +152,23 @@ class Tree {
     }
   }
 
-  isBalanced(actNode = this.root, prove = 'is balanced') {
+  isBalanced(actNode = this.root, prove = 'is balanced', list = []) {
     if (actNode === null) return
-    let rightSubTree = this.height(actNode.right)
-    let leftSubTree = this.height(actNode.left)
+    let rightSubTree = this.heightTree(actNode.right)
+    let leftSubTree = this.heightTree(actNode.left)
     
     Math.abs(rightSubTree-leftSubTree) <= 1
     ? prove = 'is balanced'
     : prove = 'is not balanced'
+
+    list.push(prove)
+
+    this.isBalanced(actNode.right, prove, list)
+    this.isBalanced(actNode.left, prove, list)
     
-    if (prove === 'is not balanced') {
-      console.log('aaaaa')
-      return prove
-    } else {
-      this.isBalanced(actNode.right, prove)
-      this.isBalanced(actNode.left, prove)
-      return prove 
-    } 
-    
+    return list.includes('is not balanced') === true
+    ? 'tree is not balanced'
+    : 'tree is balanced'
   }
 
   rebalance() {
@@ -191,4 +199,8 @@ console.log('hola guerre')
 /* console.log(nodo.preOrder2())*/
 prettyPrint(nodo.root) 
 /*console.log(nodo.depth(6))*/
+console.log(nodo.isBalanced())
+nodo.rebalance()
+prettyPrint(nodo.root)
+console.log(nodo.height(10))
 console.log(nodo.isBalanced())
